@@ -15,7 +15,21 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from twitterclone_app import views
 
+app_name = 'twitterclone'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', views.index, name='index'),
 ]
+
+
+"""
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^$', 'twitterclone_app.views.index'),
+    url(r'^login$', 'twitterclone_app.views.login_view'),
+    url(r'^logout$', 'twitterclone_app.views.logout_view'),
+    url(r'^signup$', 'twitterclone_app.views.signup'),
+]
+"""
