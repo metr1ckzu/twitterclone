@@ -4,6 +4,9 @@ from django.contrib.auth import login, authenticate, logout
 from twitterclone_app.forms import UserCreateForm, AuthenticateForm, TweetForm
 from twitterclone_app.models import Tweet
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.http import Http404
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 
@@ -65,7 +68,7 @@ def signup(request):
 @login_required
 def submit(request):
     if request.method == 'POST':
-        tweet_form = TweetFrom(data=request.POST)
+        tweet_form = TweetFormm(data=request.POST)
         next_url = request.POST.get('next_url', '/')
         if tweet_form.is_valid():
             tweet = tweet_form.save(commit=False)
@@ -85,3 +88,44 @@ def public(request, tweet_form=None):
         'public.html',
         {'tweet_form': tweet_form, 'next_url:': '/tweets',
         'tweets': tweets, 'username': request.user.username})
+
+
+def get_latest(user):
+    try:
+        return user.tweet_set.order_by('-id')[0]
+    except IndexError:
+        return ''
+
+
+@login_required
+def users(request, username='', tweet_form=None):
+    if username:
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise Http404
+        tweets = Tweet.objects.filter(user=user.id)
+        if username == request.user.username or request.user.profile.follows.filter(user__username=username):
+            return render(request, 'user.html', {'user': user, 'tweets': tweets, })
+    users = User.objects.all().annotate(tweet_count=Count('tweet'))
+    tweets = map(get_latest, users)
+    obj = zip(users, tweets)
+    tweet_form = tweet_form or TweetForm()
+    return render(request,
+        'profiles.html',
+        {'obj': obj, 'next_url': '/users/',
+        'tweet_form': tweet_form,
+        'username': request.user.username, })
+
+
+@login_required
+def follow(request):
+    if request_method == 'POST':
+        follow_id = request.POST.get('follow', False)
+        if follow_id:
+            try:
+                user = User.objects.get(id=follow_id)
+                request.user.profiles.follows.add(user.profile)
+            except ObjectDoesNotExist:
+                return redirect('/users/')
+    return redirect('/users/')
