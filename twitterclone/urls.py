@@ -25,6 +25,9 @@ urlpatterns = [
     url(r'^logout$', views.logout_view, name='logout_view'),
     url(r'^tweets$', views.public, name='public'),
     url(r'^submit$', views.submit, name='submit'),
+    url(r'^users/$', views.users, name='users'),
+    url(r'^users/(?P<username>\w{0,30})/$', views.users),
+    url(r'^follow$', views.follow, name='follow'),
 ]
 
 
