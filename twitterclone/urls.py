@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from twitterclone_app import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'twitterclone'
 urlpatterns = [
@@ -28,7 +30,7 @@ urlpatterns = [
     url(r'^users/$', views.users, name='users'),
     url(r'^users/(?P<username>\w{0,30})/$', views.users),
     url(r'^follow$', views.follow, name='follow'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 """
