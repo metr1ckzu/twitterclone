@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^login$', views.login_view, name='login_view'),
     url(r'^logout$', views.logout_view, name='logout_view'),
+    url(r'^signup$', views.signup, name='signup_view'),
     url(r'^tweets$', views.public, name='public'),
     url(r'^submit$', views.submit, name='submit'),
     url(r'^users/$', views.users, name='users'),
