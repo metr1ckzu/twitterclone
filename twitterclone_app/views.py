@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from twitterclone_app.forms import UserCreateForm, AuthenticateForm, TweetForm
@@ -7,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -54,8 +54,8 @@ def signup(request):
     user_form = UserCreateForm(data=request.POST)
     if request.method == 'POST':
         if user_form.is_valid():
-            username = user_form.clean_username()
-            password = user_form.clean_password2()
+            username = user_form.cleaned_data['username']
+            password = user_form.cleaned_data['password2']
             user_form.save()
             user = authenticate(username=username, password=password)
             login(request, user)
