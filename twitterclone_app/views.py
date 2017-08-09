@@ -16,7 +16,7 @@ def index(request, auth_form=None, user_form=None):
         tweet_form = TweetForm()
         user = request.user
         tweets_self = Tweet.objects.filter(user=user.id)
-        tweets_buddies = Tweet.objects.filter(user__userprofile__in=user.profile.follows.all)
+        tweets_buddies = Tweet.objects.filter(user__userprofile__in=user.profile.follows.all())
         tweets = tweets_self | tweets_buddies
  
         return render(request,
@@ -68,7 +68,7 @@ def signup(request):
 @login_required
 def submit(request):
     if request.method == 'POST':
-        tweet_form = TweetFormm(data=request.POST)
+        tweet_form = TweetForm(data=request.POST)
         next_url = request.POST.get('next_url', '/')
         if tweet_form.is_valid():
             tweet = tweet_form.save(commit=False)
@@ -83,7 +83,7 @@ def submit(request):
 @login_required
 def public(request, tweet_form=None):
     tweet_form = tweet_form or TweetForm()
-    tweets = Tweet.objects.reserve()[:10]
+    tweets = Tweet.objects.reverse()[:10]
     return render(request,
         'public.html',
         {'tweet_form': tweet_form, 'next_url:': '/tweets',

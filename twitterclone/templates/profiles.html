@@ -4,8 +4,8 @@
     <div class="panel right">
         <h1>Create a Ribbit</h1>
         <p>
-            <form action="/submit" method="post">
-            {% for field in ribbit_form %}{% csrf_token %}
+            <form action="/submit" method="post">{% csrf_token %}
+            {% for field in tweet_form %}
             {{ field }}
             {% endfor %}
             <input type="hidden" value="{{ next_url }}" name="next_url">
@@ -15,7 +15,7 @@
     </div>
     <div class="panel left">
         <h1>Public Profiles</h1>
-        {% for user, ribbit in obj %}
+        {% for user, tweet in obj %}
         <div class="ribbitWrapper">
             <a href="/users/{{ user.username }}">
                 <img class="avatar" src="{{ user.profile.gravatar_url }}">
@@ -23,11 +23,11 @@
             </a>
             @{{ user.username }}
             <p>
-                {{ user.ribbit_count}} Ribbits
+                {{ user.tweet_count}} Ribbits
                 <span class="spacing">{{ user.profile.followed_by.count }} Followers</span>
                 <span class="spacing">{{ user.profile.follows.count }} Following</span>
             </p>
-            <p>{{ ribbit.content }}</p>
+            <p>{{ tweet.content }}</p>
         </div>
         {% endfor %}
     </div>
