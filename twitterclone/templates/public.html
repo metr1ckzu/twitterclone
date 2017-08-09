@@ -5,7 +5,7 @@
         <h1>Create a Ribbit</h1>
         <p>
             <form action="/submit" method="post">
-            {% for field in ribbit_form %}{% csrf_token %}
+            {% for field in tweet_form %}{% csrf_token %}
             {{ field }}
             {% endfor %}
             <input type="hidden" value="{{ next_url }}" name="next_url">
@@ -15,12 +15,12 @@
     </div>
     <div class="panel left">
         <h1>Public Ribbits</h1>
-        {% for ribbit in ribbits %}
+        {% for tweet in tweets %}
         <div class="ribbitWrapper">
-            <img class="avatar" src="{{ ribbit.user.profile.gravatar_url }}">
-            <span class="name">{{ ribbit.user.first_name }}</span>@{{ ribbit.user.username }}
-            <span class="time">{{ ribbit.creation_date|timesince }}</span>
-            <p>{{ ribbit.content }}</p>
+            <img class="avatar" src="{{ tweet.user.profile.gravatar_url }}">
+            <span class="name">{{ tweet.user.first_name }}</span>@{{ tweet.user.username }}
+            <span class="time">{{ tweet.creation_date|timesince }}</span>
+            <p>{{ tweet.content }}</p>
         </div>
         {% endfor %}
     </div>
