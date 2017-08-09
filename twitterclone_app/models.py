@@ -16,7 +16,8 @@ class UserProfile(models.Model):
     follows = models.ManyToManyField('self', related_name='followed_by', symmetrical=False)
 
     def gravatar_url(self):
-        return "http://www.gravatar.com/avatar/%s?s=50" % hashlib.md5(self.user.email).hexdigest()
+        # return "http://www.gravatar.com/avatar/%s?s=50" % hashlib.md5(self.user.email).hexdigest()
+        return "http://db3.memegenerator.net/cache/images/folder282/60x60/1986282.jpg"
  
  
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
