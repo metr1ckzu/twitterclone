@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from twitterclone_app.forms import UserCreateForm, AuthenticateForm, TweetForm
-from twitterclone_app.models import Tweet
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
+
+from twitterclone_app.forms import UserCreateForm, AuthenticateForm, TweetForm
+from twitterclone_app.models import Tweet
 # Create your views here.
 
 
@@ -69,12 +70,12 @@ def signup(request):
 def submit(request):
     if request.method == 'POST':
         tweet_form = TweetForm(data=request.POST)
-        next_url = request.POST.get('next_url', '/')
+        next_url = request.POST.get("next_url", "/")
         if tweet_form.is_valid():
             tweet = tweet_form.save(commit=False)
             tweet.user = request.user
             tweet.save()
-            return redirect(next_url)
+            return redirect('/')
         else:
             return public(request, tweet_form)
     return request('/')    
