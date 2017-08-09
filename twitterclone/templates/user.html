@@ -15,7 +15,7 @@
             </a>
                 @{{ user.username }}
             <p>
-                {{ ribbits.count }} Ribbits
+                {{ tweets.count }} Ribbits
                 <span class="spacing">{{ user.profile.follows.all.count }} Following</span>
                 <span class="spacing">{{ user.profile.followed_by.all.count }} Followers</span>
             </p>
@@ -31,15 +31,15 @@
  
     <div class="panel left">
         <h1>{{ user.first_name }}'s Ribbits</h1>
-        {% for ribbit in ribbits %}
+        {% for tweet in tweets %}
         <div class="ribbitWrapper">
             <a href="/users/{{ user.username }}">
                 <img class="avatar" src="{{ user.profile.gravatar_url }}">
-                <span class="name">{{ ribbit.user.first_name }}</span>
+                <span class="name">{{ tweet.user.first_name }}</span>
             </a>
             @{{ ribbit.user.username }}
-            <span class="time">{{ ribbit.creation_date|timesince }}</span>
-            <p>{{ ribbit.content }}</p>
+            <span class="time">{{ tweet.creation_date|timesince }}</span>
+            <p>{{ tweet.content }}</p>
         </div>
         {% endfor %}
     </div>
