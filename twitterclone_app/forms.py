@@ -42,7 +42,7 @@ class TweetForm(forms.ModelForm):
  
     def is_valid(self):
         form = super(TweetForm, self).is_valid()
-        for f in self.errors.iterkeys():
+        for f in self.errors.keys():
             if f != '__all__':
                 self.fields[f].widget.attrs.update({'class': 'error tweetText'})
         return form
