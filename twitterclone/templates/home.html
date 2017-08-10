@@ -27,6 +27,8 @@
             {% endfor %}
             <input type="submit" value="Create Account">
         </form>
-    </p>
+        <br>
+        <p><strong>-- OR --</strong></p>
+        <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a>
 </div>
 {% endblock %}
