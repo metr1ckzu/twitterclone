@@ -13,11 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from twitterclone_app import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 app_name = 'twitterclone'
 urlpatterns = [
@@ -31,15 +32,5 @@ urlpatterns = [
     url(r'^users/$', views.users, name='users'),
     url(r'^users/(?P<username>\w{0,30})/$', views.users),
     url(r'^follow$', views.follow, name='follow'),
+    url(r'oauth', include('social_django.urls', namespace='social')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-
-"""
-urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', 'twitterclone_app.views.index'),
-    url(r'^login$', 'twitterclone_app.views.login_view'),
-    url(r'^logout$', 'twitterclone_app.views.logout_view'),
-    url(r'^signup$', 'twitterclone_app.views.signup'),
-]
-"""
